@@ -1,0 +1,55 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.calculator {
+    margin: 0;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    width: 440px;
+    font-family: Tahoma, sans-serif;
+    gap: 7px;
+    background-color: black;
+}
+
+.row.display {
+    display: flex;
+    background-color: burlywood;
+    justify-content: end;
+}
+
+button {
+    width: 100px;
+    height: 66px;
+    font-size: 20px;
+    font-family: Tahoma, sans-serif;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.zero {
+    width: 207px;
+    height: 66px;
+}
+
+p {
+    font-size: 60px;
+    margin: 0px;
+    margin-right: 10px;
+}
+
+.row {
+    display: flex;
+    gap: 7px;
+    justify-content: space-between;
+    width: 400px;
+}
+
+.row-5 {
+    justify-self: left;
+}
