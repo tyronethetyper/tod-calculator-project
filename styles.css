@@ -53,3 +53,15 @@ p {
 .row-5 {
     justify-self: left;
 }
+
+.number, .point {
+    background-color:lightskyblue;
+}
+
+.operator, .equals {
+    background-color: coral;
+}
+
+.extra {
+    background-color:forestgreen
+}

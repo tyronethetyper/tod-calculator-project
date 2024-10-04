@@ -1,25 +1,26 @@
 function add(a, b) {
-    return a + b;
+    return Math.round((a + b) * 1000000) / 1000000; 
 }
 
 function subtract(a, b) {
-    return a - b;
+    return Math.round((a - b) * 1000000) / 1000000;
 }
 
 function divide(a, b) {
-    return a / b;
+    return Math.round((a / b) * 1000000) / 1000000;
 }
 
 function multiply(a, b) {
-    return a * b;
+    return Math.round((a * b) * 1000000) / 1000000;
 }
 
 let num_1;
-let num_2;
+let num_2 = null;
 let operator;
 let result;
 let final_result;
 let operating = false;
+let numbers = 0;
 
 function operate(operator, a, b) {
     if (operator === "+") {
@@ -37,7 +38,7 @@ function operate(operator, a, b) {
 }
 
 const displayNumber = document.getElementsByTagName("p")[0];
-let displayInt = Number(document.getElementsByTagName("p")[0].textContent);
+let displayInt = null;
 
 const buttons = Array.from(document.getElementsByClassName("number"));
 buttons.forEach(button => {
@@ -53,12 +54,22 @@ const equalsButton = document.getElementsByClassName("equals")[0];
 equalsButton.addEventListener('click', equalsClick);
 
 const clearButton = document.getElementsByClassName("clear")[0];
-clearButton.addEventListener('click', clear)
+clearButton.addEventListener('click', clear);
+
+const decimalButton = document.getElementsByClassName("point")[0];
+decimalButton.addEventListener('click', addDecimal);
+
+const percentButton = document.getElementsByClassName("percentage")[0];
+percentButton.addEventListener('click', percentage);
+
+const plusMinusButton = document.getElementsByClassName("plusMinus")[0];
+plusMinusButton.addEventListener('click', plusMinus);
 
 function numberClick(event) {
     const button = event.target;
     const number = button.textContent;
-    if (displayInt === 0) {
+    (numbers >= 1) ? numbers++ : numbers;
+    if (displayInt === null || displayInt === 0) {
         displayNumber.textContent = number;
         displayInt = Number(displayNumber.textContent);
     }
@@ -89,20 +100,25 @@ function operatorClick(event) {
     }
     operator = event.target.textContent;
     displayInt = 0;
-    console.log(`Num 1: ${num_1}`)
-    console.log(`Num 2: ${num_2}`)
-    console.log(`Result: ${result}`)
+    numbers++;
 }
 
 function equalsClick(event) {
     operating = false;
+    if (!operator || numbers < 2) {
+        return;
+    }
     if (!num_2) {
-        num_2 = displayInt;
+        num_2 = Number(displayNumber.textContent);
         result = operate(operator, num_1, num_2);
     }
     else {
         num_2 = displayInt;
         result = operate(operator, result, num_2);
+    }
+    if (result === Infinity) {
+        displayNumber.textContent = `Not possible!`;
+        return;
     }
     displayNumber.textContent = `${result}`;
 }
@@ -111,6 +127,30 @@ function clear(event) {
     num_1 = null;
     num_2 = null;
     result = null;
-    displayInt = 0;
+    displayInt = null;
+    numbers = 0;
     displayNumber.textContent = "0";
+}
+
+function addDecimal(event) {
+    let display = displayNumber.textContent;
+    if (display.includes(".")) {
+        return;
+    }
+    displayNumber.textContent = display + ".";
+    displayInt = displayNumber.textContent;
+}
+
+function percentage(event) {
+    let number = displayNumber.textContent;
+    number = number / 100;
+    displayNumber.textContent = number;
+    displayInt = number;
+}
+
+function plusMinus(event) {
+    let number = displayNumber.textContent;
+    number *= -1;
+    displayNumber.textContent = number;
+    displayInt = number;
 }
